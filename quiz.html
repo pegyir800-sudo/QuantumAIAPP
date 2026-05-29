@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Quantum Learn AI - Quiz Battle</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+:root{
+--bg:#07111f;
+--card:#10233a;
+--card2:#0d1b2a;
+--primary:#00d9ff;
+--text:#ffffff;
+--success:#00ff88;
+--danger:#ff4d4d;
+--gold:#ffcc00;
+}
+
+body{
+background:linear-gradient(135deg,#07111f,#0b1f35,#10233a);
+color:white;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+.app{
+width:100%;
+max-width:430px;
+margin:auto;
+padding-bottom:120px;
+}
+
+/* HEADER */
+
+.header{
+padding:20px 16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.logo-box{
+width:48px;
+height:48px;
+border-radius:16px;
+background:var(--primary);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:22px;
+color:#07111f;
+box-shadow:0 0 20px var(--primary);
+}
+
+.logo h2{
+font-size:19px;
+}
+
+.logo p{
+font-size:11px;
+opacity:0.7;
+}
+
+.xp-box{
+background:rgba(255,255,255,0.08);
+padding:12px 16px;
+border-radius:18px;
+font-size:13px;
+font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+margin:0 16px;
+background:linear-gradient(135deg,#00d9ff,#0066ff);
+padding:24px;
+border-radius:28px;
+position:relative;
+overflow:hidden;
+margin-bottom:20px;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+background:rgba(255,255,255,0.12);
+border-radius:50%;
+right:-70px;
+top:-70px;
+}
+
+.hero h1{
+font-size:26px;
+margin-bottom:10px;
+position:relative;
+z-index:2;
+}
+
+.hero p{
+font-size:14px;
+line-height:1.6;
+position:relative;
+z-index:2;
+}
+
+.progress-wrap{
+margin-top:16px;
+position:relative;
+z-index:2;
+}
+
+.progress-title{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+margin-bottom:8px;
+}
+
+.progress-bar{
+width:100%;
+height:12px;
+background:rgba(255,255,255,0.2);
+border-radius:30px;
+overflow:hidden;
+}
+
+.progress-fill{
+height:100%;
+width:0%;
+background:white;
+border-radius:30px;
+transition:0.5s;
+}
+
+/* CATEGORY */
+
+.section-title{
+padding:0 16px;
+margin-top:15px;
+margin-bottom:12px;
+font-size:18px;
+font-weight:bold;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+padding:0 16px;
+}
+
+.card{
+background:rgba(255,255,255,0.06);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:24px;
+padding:20px;
+cursor:pointer;
+transition:0.3s;
+position:relative;
+overflow:hidden;
+}
+
+.card:hover{
+transform:translateY(-4px);
+}
+
+.card i{
+font-size:24px;
+color:var(--primary);
+margin-bottom:14px;
+}
+
+.card h3{
+font-size:16px;
+margin-bottom:6px;
+}
+
+.card p{
+font-size:12px;
+opacity:0.75;
+line-height:1.5;
+}
+
+.badge{
+position:absolute;
+top:12px;
+right:12px;
+padding:6px 10px;
+background:var(--gold);
+color:#111;
+font-size:10px;
+font-weight:bold;
+border-radius:30px;
+}
+
+/* QUIZ PAGE */
+
+.quiz-page{
+position:fixed;
+inset:0;
+background:linear-gradient(135deg,#07111f,#0b1f35,#10233a);
+z-index:500;
+display:none;
+flex-direction:column;
+}
+
+.quiz-top{
+padding:20px 16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.quiz-info{
+display:flex;
+flex-direction:column;
+gap:5px;
+}
+
+.quiz-info h2{
+font-size:18px;
+}
+
+.timer{
+background:rgba(255,255,255,0.08);
+padding:10px 16px;
+border-radius:16px;
+font-weight:bold;
+}
+
+.quit-btn{
+padding:12px 16px;
+border:none;
+background:var(--danger);
+color:white;
+border-radius:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.quiz-content{
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:20px;
+}
+
+.question-box{
+background:rgba(255,255,255,0.06);
+border-radius:28px;
+padding:24px;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.question-count{
+font-size:13px;
+opacity:0.7;
+margin-bottom:14px;
+}
+
+.question{
+font-size:22px;
+line-height:1.5;
+margin-bottom:24px;
+}
+
+.options{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.option{
+padding:18px;
+background:rgba(255,255,255,0.06);
+border-radius:18px;
+cursor:pointer;
+transition:0.3s;
+border:2px solid transparent;
+}
+
+.option:hover{
+border-color:var(--primary);
+}
+
+.correct{
+background:rgba(0,255,136,0.15);
+border-color:var(--success);
+}
+
+.wrong{
+background:rgba(255,77,77,0.15);
+border-color:var(--danger);
+}
+
+/* RESULT */
+
+.result-page{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.9);
+z-index:800;
+display:none;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.result-box{
+background:#10233a;
+width:100%;
+max-width:360px;
+border-radius:28px;
+padding:25px;
+text-align:center;
+}
+
+.result-box h2{
+margin-bottom:10px;
+}
+
+.result-box p{
+font-size:14px;
+opacity:0.8;
+margin-bottom:20px;
+}
+
+canvas{
+max-width:220px;
+margin:auto;
+}
+
+.result-stats{
+margin-top:20px;
+display:flex;
+justify-content:space-around;
+}
+
+.result-stat{
+font-size:13px;
+}
+
+.result-stat strong{
+display:block;
+font-size:18px;
+margin-top:6px;
+}
+
+/* LEADERBOARD */
+
+.leaderboard{
+margin:20px 16px;
+background:rgba(255,255,255,0.06);
+border-radius:24px;
+padding:20px;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.leaderboard h2{
+margin-bottom:16px;
+font-size:18px;
+}
+
+.player{
+display:flex;
+justify-content:space-between;
+padding:14px 0;
+border-bottom:1px solid rgba(255,255,255,0.05);
+font-size:14px;
+}
+
+
+.footer{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+max-width:430px;
+margin:auto;
+height:75px;
+background:#081421;
+border-top:1px solid rgba(255,255,255,0.08);
+display:flex;
+justify-content:space-around;
+align-items:center;
+}
+
+.player:last-child{
+border-bottom:none;
+}
+
+.rank{
+color:var(--primary);
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="logo">
+
+<div class="logo-box">
+<i class="fa-solid fa-brain"></i>
+</div>
+
+<div>
+<h2>Quiz Battle</h2>
+<p>Quantum Learn AI</p>
+</div>
+
+</div>
+
+<div class="xp-box">
+⭐ XP:
+<span id="xpText">0</span>
+</div>
+
+</div>
+
+<!-- HERO -->
+
+<div class="hero">
+
+<h1>Programming & Exams</h1>
+
+<p>
+Practice daily questions, improve your intelligence,
+earn XP, unlock ranks and become smarter every day.
+</p>
+
+<div class="progress-wrap">
+
+<div class="progress-title">
+
+<span>Overall Progress</span>
+
+<span id="progressText">0%</span>
+
+</div>
+
+<div class="progress-bar">
+
+<div class="progress-fill"
+id="progressFill"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- SUBJECTS -->
+
+<div class="section-title">
+Choose Subject
+</div>
+
+<div class="grid"
+id="subjectGrid"></div>
+
+<!-- LEADERBOARD -->
+
+
+
+<!-- QUIZ PAGE -->
+
+<div class="quiz-page"
+id="quizPage">
+
+<div class="quiz-top">
+
+<div class="quiz-info">
+
+<h2 id="quizTitle">
+HTML & CSS
+</h2>
+
+<div id="quizProgress">
+Question 1 / 10
+</div>
+
+</div>
+
+<div style="display:flex;gap:10px;align-items:center;">
+
+<div class="timer"
+id="timer">
+60s
+</div>
+
+<button class="quit-btn"
+onclick="quitQuiz()">
+
+Quit Quiz
+
+</button>
+
+</div>
+
+</div>
+
+<div class="quiz-content">
+
+<div class="question-box">
+
+<div class="question-count"
+id="questionCount">
+
+Question 1
+
+</div>
+
+<div class="question"
+id="questionText">
+
+Question here
+
+</div>
+
+<div class="options"
+id="optionsContainer"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RESULT -->
+
+<div class="result-page"
+id="resultPage">
+
+<div class="result-box">
+
+<h2>Quiz Results</h2>
+
+<p>
+Your performance summary
+</p>
+
+<canvas id="resultChart"></canvas>
+
+<div class="result-stats">
+
+<div class="result-stat">
+Correct
+<strong id="correctText">0</strong>
+</div>
+
+<div class="result-stat">
+Wrong
+<strong id="wrongText">0</strong>
+</div>
+
+<div class="result-stat">
+XP Earned
+<strong id="earnedXP">0</strong>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+<a href="menu.html" class="nav-item">
+<i class="fa-solid fa-house"></i>
+<span>Home</span>
+</a>
+
+<a href="learn.html" class="nav-item">
+<i class="fa-solid fa-book"></i>
+<span>Learn</span>
+</a>
+
+<a href="quiz.html" class="nav-item">
+<i class="fa-solid fa-bolt"></i>
+<span>Quiz</span>
+</a>
+
+<a href="progress.html" class="nav-item">
+<i class="fa-solid fa-chart-line"></i>
+<span>Progress</span>
+</a>
+
+<a href="profile.html" class="nav-item">
+<i class="fa-solid fa-user"></i>
+<span>Profile</span>
+</a>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================
+QUESTIONS DATABASE
+========================= */
+
+const questionBank = {
+
+htmlcss:[
+
+{
+question:"What does HTML stand for?",
+options:[
+"Hyper Text Markup Language",
+"High Transfer Machine Language",
+"Hyperlink Text Machine Language"
+],
+answer:0
+},
+
+{
+question:"Which language is mainly used for styling web pages?",
+options:[
+"HTML",
+"CSS",
+"Python"
+],
+answer:1
+},
+
+{
+question:"Which tag creates a line break in HTML?",
+options:[
+"<hr>",
+"<br>",
+"<p>"
+],
+answer:1
+},
+
+{
+question:"Which HTML tag creates an unordered list?",
+options:[
+"<ol>",
+"<ul>",
+"<li>"
+],
+answer:1
+},
+
+{
+question:"Which symbol is used for IDs in CSS?",
+options:[
+".",
+"#",
+"*"
+],
+answer:1
+},
+
+{
+question:"Which HTML tag inserts audio?",
+options:[
+"<video>",
+"<audio>",
+"<music>"
+],
+answer:1
+},
+
+{
+question:"Which file extension is for CSS?",
+options:[
+".js",
+".css",
+".html"
+],
+answer:1
+},
+
+{
+question:"Which property changes text color in CSS?",
+options:[
+"font-color",
+"color",
+"text-style"
+],
+answer:1
+},
+
+{
+question:"Which HTML tag creates a hyperlink?",
+options:[
+"<p>",
+"<a>",
+"<link>"
+],
+answer:1
+},
+
+{
+question:"Which CSS property changes background color?",
+options:[
+"background-color",
+"bg",
+"color-bg"
+],
+answer:0
+}
+
+],
+
+javascript:[
+
+{
+question:"Which symbol is used for comments in JavaScript?",
+options:[
+"//",
+"##",
+"**"
+],
+answer:0
+},
+
+{
+question:"Which operator means equal to in JavaScript?",
+options:[
+"==",
+"=",
+"!="
+],
+answer:0
+},
+
+{
+question:"Which file extension is for JavaScript?",
+options:[
+".js",
+".html",
+".css"
+],
+answer:0
+},
+
+{
+question:"Which keyword declares a variable in JavaScript?",
+options:[
+"var",
+"style",
+"link"
+],
+answer:0
+},
+
+{
+question:"Which method prints in console?",
+options:[
+"console.log()",
+"print()",
+"echo()"
+],
+answer:0
+},
+
+{
+question:"Which keyword creates a function?",
+options:[
+"function",
+"func",
+"method"
+],
+answer:0
+},
+
+{
+question:"Which loop repeats code?",
+options:[
+"for",
+"style",
+"audio"
+],
+answer:0
+},
+
+{
+question:"Which symbol ends JavaScript statements?",
+options:[
+";",
+":",
+"#"
+],
+answer:0
+},
+
+{
+question:"Which event happens on button click?",
+options:[
+"onclick",
+"onhover",
+"onmove"
+],
+answer:0
+},
+
+{
+question:"Which keyword is for conditions?",
+options:[
+"if",
+"loop",
+"switcher"
+],
+answer:0
+}
+
+],
+
+python:[
+
+{
+question:"Which language is mostly used for artificial intelligence?",
+options:[
+"Python",
+"HTML",
+"CSS"
+],
+answer:0
+},
+
+{
+question:"Which programming language uses indentation?",
+options:[
+"Python",
+"HTML",
+"SQL"
+],
+answer:0
+},
+
+{
+question:"Which keyword outputs text in Python?",
+options:[
+"print()",
+"echo()",
+"say()"
+],
+answer:0
+},
+
+{
+question:"Which symbol starts comments in Python?",
+options:[
+"#",
+"//",
+"**"
+],
+answer:0
+},
+
+{
+question:"Which datatype stores text?",
+options:[
+"string",
+"boolean",
+"integer"
+],
+answer:0
+},
+
+{
+question:"Which loop repeats code?",
+options:[
+"for",
+"repeat",
+"again"
+],
+answer:0
+},
+
+{
+question:"Which keyword creates a function?",
+options:[
+"def",
+"func",
+"make"
+],
+answer:0
+},
+
+{
+question:"Which operator means equal?",
+options:[
+"==",
+"=",
+"!="
+],
+answer:0
+},
+
+{
+question:"Which datatype stores true or false?",
+options:[
+"Boolean",
+"String",
+"Float"
+],
+answer:0
+},
+
+{
+question:"Which function gets user input?",
+options:[
+"input()",
+"read()",
+"scan()"
+],
+answer:0
+}
+
+],
+
+ict:[
+
+{
+question:"What does CPU stand for?",
+options:[
+"Central Processing Unit",
+"Computer Power Unit",
+"Central Program Utility"
+],
+answer:0
+},
+
+{
+question:"Which of these is an input device?",
+options:[
+"Monitor",
+"Keyboard",
+"Speaker"
+],
+answer:1
+},
+
+{
+question:"Which company developed Java?",
+options:[
+"Sun Microsystems",
+"Microsoft",
+"Apple"
+],
+answer:0
+},
+
+{
+question:"What does LAN stand for?",
+options:[
+"Local Area Network",
+"Long Area Network",
+"Light Area Network"
+],
+answer:0
+},
+
+{
+question:"What does USB stand for?",
+options:[
+"Universal Serial Bus",
+"Unified System Board",
+"Universal Storage Bus"
+],
+answer:0
+},
+
+{
+question:"Which device stores data permanently?",
+options:[
+"RAM",
+"ROM",
+"Cache"
+],
+answer:1
+},
+
+{
+question:"Which key deletes text to the left?",
+options:[
+"Enter",
+"Backspace",
+"Shift"
+],
+answer:1
+},
+
+{
+question:"Which device scans documents?",
+options:[
+"Scanner",
+"Speaker",
+"Keyboard"
+],
+answer:0
+},
+
+{
+question:"Which device prints documents?",
+options:[
+"Scanner",
+"Printer",
+"Mouse"
+],
+answer:1
+},
+
+{
+question:"What does PDF stand for?",
+options:[
+"Portable Document Format",
+"Printed Data File",
+"Portable Data Form"
+],
+answer:0
+}
+
+],
+
+english:[
+
+{
+question:"Which of these is a noun?",
+options:[
+"Quickly",
+"Happiness",
+"Run"
+],
+answer:1
+},
+
+{
+question:"What is the opposite of hot?",
+options:[
+"Warm",
+"Cold",
+"Heat"
+],
+answer:1
+},
+
+{
+question:"Which is a pronoun?",
+options:[
+"Table",
+"She",
+"Quickly"
+],
+answer:1
+},
+
+{
+question:"Which word is an adjective?",
+options:[
+"Beautiful",
+"Run",
+"Softly"
+],
+answer:0
+},
+
+{
+question:"What is the plural of child?",
+options:[
+"Childs",
+"Children",
+"Childes"
+],
+answer:1
+},
+
+{
+question:"Which sentence is correct?",
+options:[
+"He go to school",
+"He goes to school",
+"He going to school"
+],
+answer:1
+},
+
+{
+question:"What is the past tense of eat?",
+options:[
+"Eated",
+"Ate",
+"Eating"
+],
+answer:1
+},
+
+{
+question:"Which word is a synonym for happy?",
+options:[
+"Sad",
+"Joyful",
+"Angry"
+],
+answer:1
+},
+
+{
+question:"Which word is an adverb?",
+options:[
+"Slowly",
+"Beauty",
+"Jump"
+],
+answer:0
+},
+
+{
+question:"What is the past tense of go?",
+options:[
+"Went",
+"Goed",
+"Going"
+],
+answer:0
+}
+
+]
+
+};
+
+/* =========================
+SUBJECT CARDS
+========================= */
+
+const subjects = [
+
+{
+id:"htmlcss",
+title:"HTML & CSS",
+icon:"fa-brands fa-html5",
+desc:"Web structure and styling"
+},
+
+{
+id:"javascript",
+title:"JavaScript",
+icon:"fa-brands fa-js",
+desc:"Programming logic and web scripting"
+},
+
+{
+id:"python",
+title:"Python",
+icon:"fa-brands fa-python",
+desc:"AI and modern programming"
+},
+
+{
+id:"ict",
+title:"Programming / ICT",
+icon:"fa-solid fa-computer",
+desc:"Computer fundamentals"
+},
+
+{
+id:"english",
+title:"English",
+icon:"fa-solid fa-book-open",
+desc:"Grammar and vocabulary"
+}
+
+];
+
+const subjectGrid =
+document.getElementById("subjectGrid");
+
+subjects.forEach(subject=>{
+
+subjectGrid.innerHTML += `
+
+<div class="card"
+onclick="startQuiz('${subject.id}')">
+
+<div class="badge">
+10 Questions
+</div>
+
+<i class="${subject.icon}"></i>
+
+<h3>${subject.title}</h3>
+
+<p>${subject.desc}</p>
+
+</div>
+
+`;
+
+});
+
+/* =========================
+PROGRESS SYSTEM
+========================= */
+
+let totalAnswered =
+localStorage.getItem("totalAnswered") || 0;
+
+let xp =
+localStorage.getItem("xp") || 0;
+
+document.getElementById("xpText")
+innerText = xp;
+
+updateProgress();
+
+function updateProgress(){
+
+const progress =
+Math.min((totalAnswered / 100) * 100,100);
+
+document.getElementById("progressFill")
+.style.width = progress + "%";
+
+document.getElementById("progressText")
+.innerText =
+Math.floor(progress) + "%";
+
+}
+
+/* =========================
+QUIZ ENGINE
+========================= */
+
+let currentSubject = "";
+let currentQuestions = [];
+let currentIndex = 0;
+let score = 0;
+let timer = 60;
+let interval;
+
+function startQuiz(subject){
+
+currentSubject = subject;
+
+document.getElementById("quizPage")
+.style.display = "flex";
+
+document.getElementById("quizTitle")
+.innerText =
+subjects.find(s=>s.id===subject).title;
+
+/* SAVE PROGRESS */
+
+let savedIndex =
+parseInt(
+localStorage.getItem(subject + "_index")
+) || 0;
+
+currentIndex = savedIndex;
+
+/* RANDOM 10 QUESTIONS */
+
+const allQuestions =
+questionBank[subject];
+
+currentQuestions =
+shuffleArray(allQuestions)
+.slice(0,10);
+
+score = 0;
+
+loadQuestion();
+
+startTimer();
+
+}
+
+function loadQuestion(){
+
+if(currentIndex >= 10){
+
+showResults();
+
+return;
+
+}
+
+const q =
+currentQuestions[currentIndex];
+
+document.getElementById("questionCount")
+.innerText =
+"Question " + (currentIndex + 1);
+
+document.getElementById("quizProgress")
+.innerText =
+(currentIndex + 1) + " / 10";
+
+document.getElementById("questionText")
+.innerText =
+q.question;
+
+const container =
+document.getElementById("optionsContainer");
+
+container.innerHTML = "";
+
+q.options.forEach((option,index)=>{
+
+const div =
+document.createElement("div");
+
+div.className = "option";
+
+div.innerText = option;
+
+div.onclick = ()=>selectAnswer(div,index);
+
+container.appendChild(div);
+
+});
+
+}
+
+function selectAnswer(element,index){
+
+const q =
+currentQuestions[currentIndex];
+
+const options =
+document.querySelectorAll(".option");
+
+options.forEach(o=>o.style.pointerEvents="none");
+
+if(index === q.answer){
+
+element.classList.add("correct");
+
+score++;
+xp = parseInt(xp) + 10;
+
+}else{
+
+element.classList.add("wrong");
+
+options[q.answer]
+.classList.add("correct");
+
+}
+
+totalAnswered++;
+
+localStorage.setItem("xp",xp);
+
+localStorage.setItem(
+"totalAnswered",
+totalAnswered
+);
+
+document.getElementById("xpText")
+.innerText = xp;
+
+updateProgress();
+
+/* SAVE QUESTION PROGRESS */
+
+localStorage.setItem(
+currentSubject + "_index",
+currentIndex + 1
+);
+
+setTimeout(()=>{
+
+currentIndex++;
+
+loadQuestion();
+
+},1500);
+
+}
+
+function startTimer(){
+
+timer = 60;
+
+document.getElementById("timer")
+.innerText = timer + "s";
+
+clearInterval(interval);
+
+interval = setInterval(()=>{
+
+timer--;
+
+document.getElementById("timer")
+.innerText = timer + "s";
+
+if(timer <= 0){
+
+clearInterval(interval);
+
+showResults();
+
+}
+
+},1000);
+
+}
+
+function quitQuiz(){
+
+clearInterval(interval);
+
+document.getElementById("quizPage")
+.style.display = "none";
+
+}
+
+/* =========================
+RESULTS
+========================= */
+
+function showResults(){
+
+clearInterval(interval);
+
+document.getElementById("quizPage")
+.style.display = "none";
+
+document.getElementById("resultPage")
+.style.display = "flex";
+
+const wrong =
+10 - score;
+
+document.getElementById("correctText")
+.innerText = score;
+
+document.getElementById("wrongText")
+.innerText = wrong;
+
+document.getElementById("earnedXP")
+.innerText = score * 10;
+
+/* PIE CHART */
+
+const ctx =
+document.getElementById("resultChart");
+
+new Chart(ctx,{
+
+type:"pie",
+
+data:{
+
+labels:["Correct","Wrong"],
+
+datasets:[{
+
+data:[score,wrong],
+
+backgroundColor:[
+"#00ff88",
+"#ff4d4d"
+]
+
+}]
+
+}
+
+});
+
+/* AUTO CLOSE AFTER 5s */
+
+setTimeout(()=>{
+
+document.getElementById("resultPage")
+.style.display = "none";
+
+},5000);
+
+}
+
+/* =========================
+UTILITY
+========================= */
+
+function shuffleArray(array){
+
+return [...array].sort(
+()=>Math.random() - 0.5
+);
+
+}
+
+/* =========================
+DAILY NEW QUESTIONS SYSTEM
+========================= */
+
+/*
+
+HOW TO ADD DAILY QUESTIONS
+
+1. Create Firebase database
+2. Save questions in Firestore
+3. Load daily questions automatically
+4. Replace local questionBank with Firestore
+
+Example structure:
+
+dailyQuestions/
+   htmlcss/
+   javascript/
+   python/
+
+This allows:
+✔ New questions daily
+✔ Unlimited questions
+✔ No repeated questions
+✔ Cloud sync
+✔ Multiplayer battles
+
+*/
+
+</script>
+
+</body>
+</html>

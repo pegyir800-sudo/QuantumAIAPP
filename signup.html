@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Quantum Learn AI - Sign Up</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+:root{
+--bg:#07111f;
+--bg2:#0b1f35;
+--card:rgba(255,255,255,0.08);
+--border:rgba(255,255,255,0.12);
+--primary:#00d9ff;
+--text:#ffffff;
+}
+
+body{
+
+min-height:100vh;
+
+background:
+linear-gradient(
+135deg,
+var(--bg),
+var(--bg2),
+#10233a
+);
+
+display:flex;
+flex-direction:column;
+
+color:var(--text);
+
+overflow:hidden;
+
+}
+
+/* NAVBAR */
+
+.navbar{
+
+height:75px;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:0 18px;
+
+background:rgba(255,255,255,0.05);
+
+backdrop-filter:blur(12px);
+
+border-bottom:
+1px solid rgba(255,255,255,0.08);
+
+}
+
+.logo{
+
+display:flex;
+align-items:center;
+gap:12px;
+
+}
+
+.logo-circle{
+
+width:48px;
+height:48px;
+
+border-radius:50%;
+
+background:#00d9ff;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:22px;
+
+box-shadow:
+0 0 18px #00d9ff;
+
+}
+
+.logo-text h1{
+
+font-size:18px;
+
+}
+
+.logo-text p{
+
+font-size:12px;
+
+opacity:0.7;
+
+}
+
+/* MAIN */
+
+.container{
+
+flex:1;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:20px;
+
+overflow:auto;
+
+}
+
+/* CARD */
+
+.card{
+
+width:100%;
+max-width:420px;
+
+background:rgba(255,255,255,0.08);
+
+border:1px solid rgba(255,255,255,0.12);
+
+backdrop-filter:blur(14px);
+
+padding:30px;
+
+border-radius:32px;
+
+box-shadow:
+0 10px 35px rgba(0,0,0,0.4);
+
+animation:show 0.6s ease;
+
+}
+
+@keyframes show{
+
+from{
+transform:translateY(30px);
+opacity:0;
+}
+
+to{
+transform:translateY(0px);
+opacity:1;
+}
+
+}
+
+.card h2{
+
+font-size:32px;
+
+margin-bottom:10px;
+
+text-align:center;
+
+}
+
+.subtitle{
+
+text-align:center;
+
+opacity:0.8;
+
+margin-bottom:28px;
+
+line-height:1.6;
+
+}
+
+/* INPUT */
+
+.input-box{
+
+margin-bottom:18px;
+
+position:relative;
+
+}
+
+.input-box i{
+
+position:absolute;
+
+left:15px;
+top:18px;
+
+opacity:0.7;
+
+}
+
+.input-box input{
+
+width:100%;
+
+padding:16px 16px 16px 45px;
+
+border:none;
+outline:none;
+
+border-radius:16px;
+
+background:rgba(255,255,255,0.08);
+
+color:white;
+
+font-size:15px;
+
+}
+
+.input-box input::placeholder{
+
+color:#ccc;
+
+}
+
+/* BUTTON */
+
+.main-btn{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:16px;
+
+background:#00d9ff;
+
+color:#07111f;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:0.3s;
+
+margin-top:5px;
+
+}
+
+.main-btn:hover{
+
+transform:scale(1.02);
+
+}
+
+/* GOOGLE */
+
+.google-btn{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:16px;
+
+background:white;
+
+color:#111;
+
+font-size:15px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+
+margin-top:15px;
+
+}
+
+/* DIVIDER */
+
+.divider{
+
+text-align:center;
+
+margin:22px 0;
+
+position:relative;
+
+}
+
+.divider::before{
+
+content:"";
+
+position:absolute;
+
+top:50%;
+left:0;
+
+width:100%;
+height:1px;
+
+background:rgba(255,255,255,0.15);
+
+}
+
+.divider span{
+
+position:relative;
+
+padding:0 10px;
+
+background:#10233a;
+
+font-size:13px;
+
+}
+
+/* LINKS */
+
+.links{
+
+margin-top:20px;
+
+text-align:center;
+
+font-size:14px;
+
+}
+
+.links a{
+
+color:#00d9ff;
+
+text-decoration:none;
+
+font-weight:bold;
+
+}
+
+/* LOADER */
+
+.loader{
+
+display:none;
+
+margin:18px auto 0;
+
+border:4px solid rgba(255,255,255,0.1);
+
+border-top:4px solid #00d9ff;
+
+width:35px;
+height:35px;
+
+border-radius:50%;
+
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+/* FOOTER */
+
+.footer{
+
+text-align:center;
+
+padding:14px;
+
+font-size:12px;
+
+opacity:0.7;
+
+}
+
+@media(min-width:800px){
+
+body{
+
+justify-content:center;
+align-items:center;
+
+}
+
+.container{
+
+width:430px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">
+
+<div class="logo-circle">
+
+<i class="fa-solid fa-brain"></i>
+
+</div>
+
+<div class="logo-text">
+
+<h1>Quantum Learn AI</h1>
+
+<p>We Think Wisely</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="container">
+
+<div class="card">
+
+<h2>Create Account</h2>
+
+<p class="subtitle">
+
+Join Quantum Learn AI and begin your smart learning journey.
+
+</p>
+
+<!-- FULL NAME -->
+
+<div class="input-box">
+
+<i class="fa-solid fa-user"></i>
+
+<input type="text"
+id="name"
+placeholder="Enter Full Name">
+
+</div>
+
+<!-- EMAIL -->
+
+<div class="input-box">
+
+<i class="fa-solid fa-envelope"></i>
+
+<input type="email"
+id="email"
+placeholder="Enter Email">
+
+</div>
+
+<!-- PASSWORD -->
+
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
+<input type="password"
+id="password"
+placeholder="Enter Password">
+
+</div>
+
+<!-- SIGNUP BUTTON -->
+
+<button class="main-btn"
+onclick="signup()">
+
+Create Account
+
+</button>
+
+<div class="loader"
+id="loader"></div>
+
+<!-- DIVIDER -->
+
+<div class="divider">
+
+<span>OR</span>
+
+</div>
+
+<!-- GOOGLE -->
+
+<button class="google-btn"
+onclick="googleSignup()">
+
+<i class="fa-brands fa-google"></i>
+
+Continue with Google
+
+</button>
+
+<!-- LINKS -->
+
+<div class="links">
+
+Already have an account?
+
+<a href="login.html">
+
+Login
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+© Quantum Learn AI • Powered by Wise LTD
+
+</div>
+
+<script type="module">
+
+/* FIREBASE */
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getAuth,
+
+createUserWithEmailAndPassword,
+
+GoogleAuthProvider,
+
+signInWithPopup,
+
+updateProfile,
+
+sendEmailVerification
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+
+getFirestore,
+
+doc,
+
+setDoc
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+/* CONFIG */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA6RGcEIFPSF25wsMN-7QLg1-EvJrtvLmY",
+
+authDomain: "my-web-e9b90.firebaseapp.com",
+
+projectId: "my-web-e9b90",
+
+storageBucket: "my-web-e9b90.firebasestorage.app",
+
+messagingSenderId: "253275343289",
+
+appId: "1:253275343289:web:169a10b703962d3ae90e68",
+
+measurementId: "G-RDV9JZYJDZ"
+
+};
+
+/* INITIALIZE */
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const db =
+getFirestore(app);
+
+const provider =
+new GoogleAuthProvider();
+
+const loader =
+document.getElementById("loader");
+
+/* SIGN UP */
+
+window.signup =
+async function(){
+
+const name =
+document.getElementById("name").value.trim();
+
+const email =
+document.getElementById("email").value.trim();
+
+const password =
+document.getElementById("password").value.trim();
+
+if(name === "" ||
+email === "" ||
+password === ""){
+
+alert(
+"Please fill all fields."
+);
+
+return;
+
+}
+
+if(password.length < 6){
+
+alert(
+"Password must be at least 6 characters."
+);
+
+return;
+
+}
+
+loader.style.display =
+"block";
+
+try{
+
+/* CREATE USER */
+
+const userCredential =
+
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const user =
+userCredential.user;
+
+/* UPDATE NAME */
+
+await updateProfile(
+user,
+{
+displayName:name
+}
+);
+
+/* EMAIL VERIFICATION */
+
+await sendEmailVerification(user);
+
+/* SAVE USER */
+
+await setDoc(
+doc(db,"users",user.uid),
+{
+name:name,
+email:email,
+createdAt:Date.now()
+}
+);
+
+loader.style.display =
+"none";
+
+alert(
+"Account created successfully. Please verify your email."
+);
+
+/* GO TO PROFILE IMAGE */
+
+window.location.href =
+"upload-profile.html";
+
+}catch(error){
+
+loader.style.display =
+"none";
+
+alert(error.message);
+
+}
+
+}
+
+/* GOOGLE SIGNUP */
+
+window.googleSignup =
+async function(){
+
+loader.style.display =
+"block";
+
+try{
+
+const result =
+
+await signInWithPopup(
+auth,
+provider
+);
+
+const user =
+result.user;
+
+/* SAVE USER */
+
+await setDoc(
+doc(db,"users",user.uid),
+{
+name:user.displayName,
+email:user.email,
+profileImage:user.photoURL || "",
+createdAt:Date.now()
+},
+{ merge:true }
+);
+
+loader.style.display =
+"none";
+
+window.location.href =
+"menu.html";
+
+}catch(error){
+
+loader.style.display =
+"none";
+
+alert(error.message);
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>

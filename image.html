@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Quantum Learn AI - AI Image Generator</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+height:100vh;
+display:flex;
+overflow:hidden;
+}
+
+:root{
+--sub:#94a3b8;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:290px;
+background:#091225;
+position:fixed;
+left:0;
+top:0;
+height:100%;
+transform:translateX(-100%);
+transition:0.3s;
+z-index:9999;
+border-right:1px solid rgba(255,255,255,0.08);
+display:flex;
+flex-direction:column;
+}
+
+.sidebar.show{
+transform:translateX(0);
+}
+
+.sidebar-header{
+padding:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.close-sidebar{
+width:36px;
+height:36px;
+border-radius:10px;
+background:#111827;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+}
+
+.history-list{
+flex:1;
+overflow-y:auto;
+padding:10px;
+}
+
+.history-item{
+background:#111827;
+padding:12px;
+border-radius:14px;
+margin-bottom:12px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.history-item:hover{
+background:#172554;
+}
+
+.history-title{
+font-size:14px;
+font-weight:bold;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.history-item img{
+width:100%;
+height:140px;
+object-fit:cover;
+border-radius:10px;
+margin-top:10px;
+}
+
+/* MAIN */
+
+.main-wrapper{
+flex:1;
+display:flex;
+flex-direction:column;
+width:100%;
+}
+
+.navbar{
+height:74px;
+background:#111827;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 14px;
+}
+
+.left-nav{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.menu-btn{
+width:42px;
+height:42px;
+border-radius:12px;
+background:#1e293b;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+font-size:18px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.logo-circle{
+width:50px;
+height:50px;
+border-radius:16px;
+background:linear-gradient(135deg,#00d9ff,#0077ff);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+box-shadow:0 0 18px rgba(0,217,255,0.45);
+}
+
+.logo-text h1{
+font-size:18px;
+}
+
+.logo-text p{
+font-size:11px;
+color:var(--sub);
+margin-top:3px;
+}
+
+
+.bb{
+width:45px;
+height:45px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,0.08);
+color:var(--text);
+font-size:18px;
+cursor:pointer;
+}
+
+
+
+
+.right-nav{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.nav-icon{
+width:42px;
+height:42px;
+border-radius:14px;
+background:#1e293b;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.profile{
+width:46px;
+height:46px;
+border-radius:50%;
+overflow:hidden;
+border:2px solid #60a5fa;
+}
+
+.profile img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* MAIN CONTENT */
+
+.main{
+flex:1;
+padding:15px;
+display:flex;
+flex-direction:column;
+gap:15px;
+background:#1e293b;
+overflow:hidden;
+}
+
+.search-box,
+textarea{
+background:#111827;
+border:none;
+outline:none;
+color:white;
+}
+
+.search-box{
+padding:12px;
+border-radius:14px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.search-box input{
+flex:1;
+background:none;
+border:none;
+outline:none;
+color:white;
+font-size:16px;
+}
+
+.search-box i{
+color:#60a5fa;
+font-size:18px;
+}
+
+
+.btn{
+width:45px;
+height:45px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,0.08);
+color:var(--text);
+font-size:18px;
+cursor:pointer;
+}
+
+
+
+textarea{
+width:100%;
+height:120px;
+padding:15px;
+resize:none;
+border-radius:15px;
+font-size:16px;
+}
+
+.button-area{
+display:flex;
+gap:10px;
+}
+
+.button-area button{
+flex:1;
+height:55px;
+border:none;
+border-radius:14px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.generate-btn{
+background:#2563eb;
+color:white;
+}
+
+.clear-btn{
+background:#ef4444;
+color:white;
+}
+
+.result-box{
+flex:1;
+background:#020f2f;
+border-radius:18px;
+padding:15px;
+overflow:auto;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.generated-image{
+width:100%;
+height:100%;
+object-fit:contain;
+border-radius:16px;
+}
+
+.placeholder{
+text-align:center;
+color:#94a3b8;
+line-height:1.8;
+}
+
+.loading{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:15px;
+}
+
+.spinner{
+width:45px;
+height:45px;
+border:4px solid #334155;
+border-top:4px solid #60a5fa;
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+100%{transform:rotate(360deg);}
+}
+
+.footer{
+height:70px;
+background:#091225;
+display:flex;
+justify-content:space-around;
+align-items:center;
+}
+
+.footer a{
+text-decoration:none;
+color:#cbd5e1;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+font-size:12px;
+}
+
+.footer a i{
+font-size:20px;
+}
+
+@media(max-width:700px){
+.logo-text h1{
+font-size:15px;
+}
+
+.logo-text p{
+font-size:10px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar" id="sidebar">
+
+<div class="sidebar-header">
+<h2>Recent Images</h2>
+
+<div class="close-sidebar" onclick="toggleSidebar()">
+<i class="fas fa-times"></i>
+</div>
+
+</div>
+
+<div class="history-list" id="historyList"></div>
+
+</div>
+
+
+
+<!-- MAIN -->
+
+<div class="main-wrapper">
+
+<div class="navbar">
+
+<div class="left-nav">
+
+<div class="menu-btn" onclick="toggleSidebar()">
+<i class="fas fa-bars"></i>
+</div>
+
+<div class="logo">
+
+<div class="logo-circle">
+<i class="fa-solid fa-brain "></i>
+</div>
+
+<div class="logo-text">
+<h1>Quantum Learn AI</h1>
+<p>Pollinations AI Generator</p>
+</div>
+
+</div>
+</div>
+
+<div class="right-nav">
+
+
+<button class="btn"
+onclick="history.back()">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</button>
+
+<div class="profile">
+<img id="profileImage"
+src="https://i.imgur.com/6VBx3io.png">
+</div>
+
+</div>
+</div>
+
+<div class="main">
+
+<div class="search-box">
+<i class="fas fa-search"></i>
+<input type="text"
+placeholder="Search anything..."
+id="searchInput">
+</div>
+
+<textarea
+id="userPrompt"
+placeholder="Describe the image you want AI to generate..."></textarea>
+
+<div class="button-area">
+
+<button class="generate-btn"
+onclick="generateImage()">
+Generate Image
+</button>
+
+<button class="clear-btn"
+onclick="clearImage()">
+Clear
+</button>
+
+</div>
+
+<div class="result-box" id="resultBox">
+
+<div class="placeholder">
+<h2>AI Image Generator</h2>
+<br>
+Type any prompt and generate high quality AI images.
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+<a href="menu.html">
+<i class="fas fa-home"></i>
+<span>Home</span>
+</a>
+
+<a href="quiz.html">
+<i class="fas fa-question-circle"></i>
+<span>Quiz</span>
+</a>
+
+<a href="planner.html">
+<i class="fas fa-calendar"></i>
+<span>Planner</span>
+</a>
+
+<a href="profile.html">
+<i class="fas fa-user"></i>
+<span>Profile</span>
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+/* PROFILE IMAGE */
+
+const savedProfile = localStorage.getItem("profileImage");
+
+if(savedProfile){
+document.getElementById("profileImage").src = savedProfile;
+}
+
+/* SIDEBAR */
+
+function toggleSidebar(){
+document.getElementById("sidebar")
+.classList.toggle("show");
+}
+
+/* STORAGE */
+
+let imageHistory =
+JSON.parse(localStorage.getItem("aiImages")) || [];
+
+/* RENDER HISTORY */
+
+function renderHistory(){
+
+const historyList =
+document.getElementById("historyList");
+
+historyList.innerHTML = "";
+
+if(imageHistory.length === 0){
+
+historyList.innerHTML = `
+<div class="placeholder">
+No recent images
+</div>
+`;
+
+return;
+}
+
+imageHistory.forEach((item,index)=>{
+
+historyList.innerHTML += `
+<div class="history-item"
+onclick="openImage(${index})">
+
+<div class="history-title">
+${item.prompt}
+</div>
+
+<img src="${item.image}">
+
+</div>
+`;
+
+});
+
+}
+
+renderHistory();
+
+/* OPEN IMAGE */
+
+function openImage(index){
+
+const item = imageHistory[index];
+
+const resultBox =
+document.getElementById("resultBox");
+
+resultBox.innerHTML = `
+<img src="${item.image}"
+class="generated-image">
+`;
+
+document.getElementById("userPrompt").value = item.prompt;
+
+toggleSidebar();
+
+}
+
+/* GENERATE IMAGE */
+
+async function generateImage(){
+
+const prompt =
+document.getElementById("userPrompt")
+.value.trim();
+
+const resultBox =
+document.getElementById("resultBox");
+
+if(!prompt){
+alert("Please enter image prompt");
+return;
+}
+
+resultBox.innerHTML = `
+<div class="loading">
+<div class="spinner"></div>
+<div>Generating quality image...</div>
+</div>
+`;
+
+try{
+
+/* WORKING POLLINATIONS URL */
+
+const imageUrl =
+`https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?seed=${Date.now()}&width=1024&height=1024&nologo=true`;
+
+const img = new Image();
+
+img.className = "generated-image";
+
+/* IMPORTANT FIX */
+img.referrerPolicy = "no-referrer";
+
+img.onload = function(){
+
+resultBox.innerHTML = "";
+resultBox.appendChild(img);
+
+imageHistory.unshift({
+prompt:prompt,
+image:imageUrl
+});
+
+if(imageHistory.length > 30){
+imageHistory.pop();
+}
+
+localStorage.setItem(
+"aiImages",
+JSON.stringify(imageHistory)
+);
+
+renderHistory();
+
+}
+
+img.onerror = function(){
+
+/* AUTO FALLBACK */
+
+const fallback =
+`https://picsum.photos/seed/${Date.now()}/900/900`;
+
+resultBox.innerHTML = `
+<div style="width:100%;text-align:center;">
+
+<img src="${fallback}"
+class="generated-image">
+
+<br><br>
+
+<div class="placeholder">
+Pollinations server is busy right now.<br>
+Please try again in a few seconds.
+</div>
+
+</div>
+`;
+
+}
+
+img.src = imageUrl;
+
+}catch(error){
+
+console.log(error);
+
+resultBox.innerHTML = `
+<div class="placeholder">
+Failed to generate image.
+</div>
+`;
+
+}
+
+}
+
+/* CLEAR */
+
+function clearImage(){
+
+document.getElementById("userPrompt").value = "";
+
+document.getElementById("resultBox")
+.innerHTML = `
+<div class="placeholder">
+<h2>AI Image Generator</h2>
+<br>
+Type any prompt and generate high quality AI images.
+</div>
+`;
+
+}
+
+/* SEARCH */
+
+document.getElementById("searchInput")
+.addEventListener("input", function(){
+
+const value = this.value.toLowerCase();
+
+if(value.includes("home")){
+window.location.href = "menu.html";
+}
+
+if(value.includes("quiz")){
+window.location.href = "quiz.html";
+}
+
+if(value.includes("planner")){
+window.location.href = "planner.html";
+}
+
+if(value.includes("profile")){
+window.location.href = "profile.html";
+}
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Quantum Learn AI - Motivation</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+:root{
+--bg:#07111f;
+--card:#10233a;
+--card2:#0d1b2a;
+--primary:#00d9ff;
+--text:#ffffff;
+--gold:#ffcc00;
+--shadow:rgba(0,0,0,0.4);
+}
+
+body.light{
+--bg:#eef3ff;
+--card:#ffffff;
+--card2:#f5f7ff;
+--primary:#0077ff;
+--text:#111111;
+--shadow:rgba(0,0,0,0.1);
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+min-height:100vh;
+overflow:hidden;
+transition:0.4s;
+}
+
+.app{
+width:100%;
+max-width:430px;
+height:100vh;
+margin:auto;
+display:flex;
+flex-direction:column;
+position:relative;
+overflow:hidden;
+}
+
+/* NAVBAR */
+
+.navbar{
+height:75px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 15px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(12px);
+border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.left{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.btn{
+width:45px;
+height:45px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,0.08);
+color:var(--text);
+font-size:18px;
+cursor:pointer;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.logo-box{
+width:45px;
+height:45px;
+border-radius:14px;
+background:var(--primary);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:20px;
+color:#07111f;
+box-shadow:0 0 18px var(--primary);
+}
+
+.logo-text h3{
+font-size:17px;
+}
+
+.logo-text p{
+font-size:11px;
+opacity:0.7;
+}
+
+/* MAIN */
+
+.main{
+flex:1;
+overflow-y:auto;
+padding:18px;
+padding-bottom:100px;
+}
+
+/* HERO */
+
+.hero{
+background:linear-gradient(135deg,#00d9ff,#0066ff);
+padding:24px;
+border-radius:30px;
+position:relative;
+overflow:hidden;
+margin-bottom:18px;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+width:220px;
+height:220px;
+background:rgba(255,255,255,0.12);
+border-radius:50%;
+top:-100px;
+right:-80px;
+}
+
+.hero h1{
+font-size:28px;
+margin-bottom:10px;
+position:relative;
+z-index:2;
+}
+
+.hero p{
+font-size:14px;
+line-height:1.7;
+position:relative;
+z-index:2;
+}
+
+/* DAILY BADGE */
+
+.day-badge{
+margin-top:15px;
+display:inline-block;
+padding:10px 16px;
+background:rgba(255,255,255,0.18);
+border-radius:30px;
+font-size:13px;
+font-weight:bold;
+position:relative;
+z-index:2;
+}
+
+/* QUOTE CARD */
+
+.quote-card{
+background:var(--card);
+border-radius:30px;
+padding:25px;
+box-shadow:0 15px 35px var(--shadow);
+position:relative;
+overflow:hidden;
+margin-bottom:18px;
+}
+
+.quote-card::before{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+border-radius:50%;
+background:rgba(255,255,255,0.03);
+top:-70px;
+right:-60px;
+}
+
+.quote-icon{
+font-size:45px;
+color:var(--primary);
+margin-bottom:20px;
+position:relative;
+z-index:2;
+}
+
+.quote-text{
+font-size:21px;
+line-height:1.8;
+font-weight:bold;
+position:relative;
+z-index:2;
+}
+
+.quote-number{
+margin-top:22px;
+display:inline-block;
+padding:10px 18px;
+border-radius:30px;
+background:rgba(0,217,255,0.12);
+border:1px solid rgba(0,217,255,0.25);
+color:var(--primary);
+font-size:13px;
+font-weight:bold;
+position:relative;
+z-index:2;
+}
+
+/* ACTION BUTTONS */
+
+.actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+margin-bottom:18px;
+}
+
+.action-btn{
+background:var(--card);
+padding:18px;
+border:none;
+border-radius:24px;
+color:var(--text);
+cursor:pointer;
+box-shadow:0 10px 25px var(--shadow);
+font-size:14px;
+font-weight:bold;
+}
+
+.action-btn i{
+font-size:22px;
+margin-bottom:10px;
+display:block;
+color:var(--primary);
+}
+
+/* STATUS */
+
+.status-card{
+background:var(--card);
+padding:22px;
+border-radius:28px;
+box-shadow:0 10px 25px var(--shadow);
+}
+
+.status-title{
+font-size:18px;
+margin-bottom:15px;
+}
+
+.status-item{
+display:flex;
+justify-content:space-between;
+padding:14px;
+background:var(--card2);
+border-radius:16px;
+margin-bottom:12px;
+font-size:14px;
+}
+
+.status-item span:last-child{
+color:var(--primary);
+font-weight:bold;
+}
+
+/* FOOTER */
+
+.footer{
+position:absolute;
+bottom:0;
+left:0;
+right:0;
+height:75px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(12px);
+border-top:1px solid rgba(255,255,255,0.08);
+display:flex;
+justify-content:space-around;
+align-items:center;
+}
+
+.footer button{
+background:none;
+border:none;
+color:var(--text);
+font-size:11px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:5px;
+cursor:pointer;
+}
+
+.footer i{
+font-size:20px;
+}
+
+.active{
+color:var(--primary);
+}
+
+/* DESKTOP */
+
+@media(min-width:800px){
+
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+background:#06101c;
+}
+
+.app{
+border-radius:30px;
+overflow:hidden;
+box-shadow:0 20px 60px rgba(0,0,0,0.5);
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="left">
+
+<button class="btn"
+onclick="history.back()">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</button>
+
+<div class="logo">
+
+
+<div class="logo-box">
+
+<i class="fa-solid fa-brain"></i>
+
+</div>
+
+<div class="logo-text">
+
+<h3>Quantum Learn AI</h3>
+
+<p>Daily Motivation</p>
+
+</div>
+
+</div>
+
+</div>
+
+<button class="btn"
+onclick="toggleTheme()">
+
+<i class="fa-solid fa-moon"></i>
+
+</button>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- HERO -->
+
+<div class="hero">
+
+<h1>Stay Motivated 🔥</h1>
+
+<p>
+Powerful motivation every day to help you stay focused,
+consistent, disciplined, and successful in your learning journey.
+</p>
+
+<div class="day-badge"
+id="dayBadge">
+
+Day 1 Motivation
+
+</div>
+
+</div>
+
+<!-- QUOTE -->
+
+<div class="quote-card">
+
+<div class="quote-icon">
+
+<i class="fa-solid fa-quote-left"></i>
+
+</div>
+
+<div class="quote-text"
+id="quoteText">
+
+Loading motivation...
+
+</div>
+
+<div class="quote-number"
+id="quoteNumber">
+
+Quote #1
+
+</div>
+
+</div>
+
+<!-- ACTIONS -->
+
+<div class="actions">
+
+<button class="action-btn"
+onclick="previousQuote()">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Previous Quote
+
+</button>
+
+<button class="action-btn"
+onclick="nextQuote()">
+
+<i class="fa-solid fa-arrow-right"></i>
+
+Next Quote
+
+</button>
+
+</div>
+
+<!-- STATUS -->
+
+<div class="status-card">
+
+<div class="status-title">
+
+Motivation Status
+
+</div>
+
+<div class="status-item">
+
+<span>Total Quotes</span>
+
+<span>100</span>
+
+</div>
+
+<div class="status-item">
+
+<span>Current Quote</span>
+
+<span id="currentQuoteStatus">
+
+#1
+
+</span>
+
+</div>
+
+<div class="status-item">
+
+<span>Motivation Mode</span>
+
+<span>Active</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+<button onclick="window.location.href='menu.html'">
+
+<i class="fa-solid fa-house"></i>
+
+Home
+
+</button>
+
+<button onclick="window.location.href='fullcourse.html'">
+
+<i class="fa-solid fa-book"></i>
+
+Courses
+
+</button>
+
+<button onclick="window.location.href='focus.html'">
+
+<i class="fa-solid fa-clock"></i>
+
+Focus
+
+</button>
+
+
+
+<button onclick="window.location.href='profile.html'">
+
+<i class="fa-solid fa-user"></i>
+
+Profile
+
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================
+THEME SYSTEM
+========================= */
+
+if(localStorage.getItem("theme")==="light"){
+
+document.body.classList.add("light");
+
+}
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+localStorage.setItem(
+"theme",
+document.body.classList.contains("light")
+? "light"
+: "dark"
+);
+
+}
+
+/* =========================
+100 MOTIVATIONAL QUOTES
+========================= */
+
+const quotes = [
+
+"Success starts with self-discipline.",
+"Every expert was once a beginner.",
+"Do something today your future self will thank you for.",
+"Dream big and start small.",
+"Wise Men don't talk a lot",
+"Every Wise Man accept opinion",
+"Thinkig Twice is not a punishment",
+"plant it  today, and harvest it tomorrow",
+"Learning never exhausts the mind.",
+"Focus on progress, not perfection.",
+"Your future is created by what you do today.",
+"Discipline beats motivation.",
+"Keep going even when it feels hard.",
+"One step every day creates success.",
+"Consistency creates greatness.",
+"Push yourself because no one else will.",
+"Success is built daily.",
+"Stay patient and trust the process.",
+"Your only limit is your mindset.",
+"Do not stop until you are proud.",
+"Great things take time.",
+"Work hard in silence.",
+"Stay focused and never quit.",
+"Be stronger than your excuses.",
+"Your dreams are worth fighting for.",
+"Every day is a second chance.",
+"Hard work changes everything.",
+"Success begins with courage.",
+"Progress is still progress.",
+"Believe in your potential.",
+"Stay hungry for knowledge.",
+"Learning is your superpower.",
+"Big achievements start small.",
+"Discipline creates freedom.",
+"Be fearless in pursuit of greatness.",
+"Growth starts outside comfort zones.",
+"Stay positive and keep learning.",
+"Never underestimate yourself.",
+"Your effort matters.",
+"Success requires consistency.",
+"Turn pain into power.",
+"Your mindset controls your future.",
+"Make today count.",
+"Nothing worth having comes easy.",
+"Stay committed to your goals.",
+"Success loves preparation.",
+"Be proud of small wins.",
+"Focus creates results.",
+"Believe you can do it.",
+"Never stop improving.",
+"The best investment is in yourself.",
+"Stay calm and keep building.",
+"You are capable of greatness.",
+"Every challenge makes you stronger.",
+"Keep learning every day.",
+"Success is earned, not given.",
+"Confidence comes from preparation.",
+"Your journey matters.",
+"Hard work beats talent.",
+"Keep your vision alive.",
+"Discipline changes lives.",
+"Stay motivated and focused.",
+"Success takes sacrifice.",
+"Your dreams need action.",
+"Never give up on yourself.",
+"Small progress is powerful.",
+"Every effort counts.",
+"You are stronger than you think.",
+"Learning opens new doors.",
+"Stay focused on your mission.",
+"Success begins today.",
+"Your future depends on now.",
+"Be proud of your growth.",
+"Every mistake is a new style",
+"Stay determined always.",
+"Knowledge creates opportunities.",
+"Your consistency will pay off.",
+"Think big and act bigger.",
+"Success rewards discipline.",
+"Work smart and stay humble.",
+"Do not fear failure.",
+"Every day is a fresh start.",
+"Keep chasing your goals.",
+"Stay inspired every day.",
+"Believe in your dreams.",
+"Push beyond your limits.",
+"Focus on becoming better.",
+"Success needs patience.",
+"Your mindset shapes reality.",
+"Stay loyal to your goals.",
+"Great minds keep learning.",
+"Keep moving forward.",
+"Success requires effort daily.",
+"Never settle for less.",
+"Your hard work will shine.",
+"Be brave enough to start.",
+"Success grows with consistency.",
+"Stay disciplined every day.",
+"Work until you inspire others.",
+"Keep your passion alive.",
+"Nothing can stop determination.",
+"Trust your learning journey.",
+"Be unstoppable.",
+"Growth is a daily process.",
+"Keep your focus strong.",
+"Success is closer than you think.",
+"Your dreams are possible."
+
+];
+
+/* =========================
+DAILY QUOTE SYSTEM
+========================= */
+
+const quoteText =
+document.getElementById("quoteText");
+
+const quoteNumber =
+document.getElementById("quoteNumber");
+
+const currentQuoteStatus =
+document.getElementById("currentQuoteStatus");
+
+const dayBadge =
+document.getElementById("dayBadge");
+
+let currentIndex =
+parseInt(localStorage.getItem("motivationIndex")) || 0;
+
+function showQuote(index){
+
+quoteText.innerText =
+quotes[index];
+
+quoteNumber.innerText =
+`Quote #${index + 1}`;
+
+currentQuoteStatus.innerText =
+`#${index + 1}`;
+
+dayBadge.innerText =
+`Day ${index + 1} Motivation`;
+
+localStorage.setItem(
+"motivationIndex",
+index
+);
+
+}
+
+/* AUTO DAILY CHANGE */
+
+const lastVisit =
+localStorage.getItem("motivationDate");
+
+const today =
+new Date().toDateString();
+
+if(lastVisit !== today){
+
+currentIndex++;
+
+if(currentIndex >= quotes.length){
+
+currentIndex = 0;
+
+}
+
+localStorage.setItem(
+"motivationDate",
+today
+);
+
+localStorage.setItem(
+"motivationIndex",
+currentIndex
+);
+
+}
+
+showQuote(currentIndex);
+
+/* NEXT */
+
+function nextQuote(){
+
+currentIndex++;
+
+if(currentIndex >= quotes.length){
+
+currentIndex = 0;
+
+}
+
+showQuote(currentIndex);
+
+}
+
+/* PREVIOUS */
+
+function previousQuote(){
+
+currentIndex--;
+
+if(currentIndex < 0){
+
+currentIndex = quotes.length - 1;
+
+}
+
+showQuote(currentIndex);
+
+}
+
+</script>
+
+</body>
+</html>

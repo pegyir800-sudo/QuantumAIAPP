@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Quantum Learn AI - Login</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+
+min-height:100vh;
+
+background:
+linear-gradient(
+135deg,
+#07111f,
+#0b1f35,
+#10233a
+);
+
+display:flex;
+
+flex-direction:column;
+
+color:white;
+
+overflow:hidden;
+
+}
+
+/* NAVBAR */
+
+.navbar{
+
+height:75px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:0 18px;
+
+background:rgba(255,255,255,0.05);
+
+backdrop-filter:blur(12px);
+
+border-bottom:
+1px solid rgba(255,255,255,0.08);
+
+}
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+}
+
+.logo-circle{
+
+width:48px;
+
+height:48px;
+
+border-radius:50%;
+
+background:#00d9ff;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:22px;
+
+box-shadow:
+0 0 15px #00d9ff;
+
+}
+
+.logo-text h1{
+
+font-size:18px;
+
+}
+
+.logo-text p{
+
+font-size:12px;
+
+opacity:0.7;
+
+}
+
+/* MAIN */
+
+.container{
+
+flex:1;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+}
+
+/* CARD */
+
+.card{
+
+width:100%;
+
+max-width:420px;
+
+background:rgba(255,255,255,0.08);
+
+border:1px solid rgba(255,255,255,0.12);
+
+backdrop-filter:blur(14px);
+
+padding:30px;
+
+border-radius:30px;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.4);
+
+animation:show 0.6s ease;
+
+}
+
+@keyframes show{
+
+from{
+transform:translateY(30px);
+opacity:0;
+}
+
+to{
+transform:translateY(0);
+opacity:1;
+}
+
+}
+
+.card h2{
+
+font-size:32px;
+
+margin-bottom:10px;
+
+text-align:center;
+
+}
+
+.subtitle{
+
+text-align:center;
+
+opacity:0.8;
+
+margin-bottom:28px;
+
+line-height:1.6;
+
+}
+
+/* INPUT */
+
+.input-box{
+
+margin-bottom:18px;
+
+position:relative;
+
+}
+
+.input-box i{
+
+position:absolute;
+
+left:15px;
+
+top:18px;
+
+opacity:0.7;
+
+}
+
+.input-box input{
+
+width:100%;
+
+padding:16px 16px 16px 45px;
+
+border:none;
+
+outline:none;
+
+border-radius:16px;
+
+background:rgba(255,255,255,0.08);
+
+color:white;
+
+font-size:15px;
+
+}
+
+.input-box input::placeholder{
+
+color:#ccc;
+
+}
+
+/* BUTTON */
+
+.main-btn{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:16px;
+
+background:#00d9ff;
+
+color:#07111f;
+
+font-size:16px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:0.3s;
+
+margin-top:5px;
+
+}
+
+.main-btn:hover{
+
+transform:scale(1.02);
+
+}
+
+/* DIVIDER */
+
+.divider{
+
+text-align:center;
+
+margin:22px 0;
+
+position:relative;
+
+}
+
+.divider::before{
+
+content:"";
+
+position:absolute;
+
+top:50%;
+
+left:0;
+
+width:100%;
+
+height:1px;
+
+background:rgba(255,255,255,0.15);
+
+}
+
+.divider span{
+
+position:relative;
+
+padding:0 10px;
+
+background:#10233a;
+
+font-size:13px;
+
+}
+
+/* GOOGLE BUTTON */
+
+.google-btn{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:16px;
+
+background:white;
+
+color:#111;
+
+font-size:15px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:10px;
+
+}
+
+/* LINKS */
+
+.links{
+
+margin-top:20px;
+
+display:flex;
+
+justify-content:space-between;
+
+font-size:14px;
+
+}
+
+.links a{
+
+color:#00d9ff;
+
+text-decoration:none;
+
+font-weight:bold;
+
+}
+
+/* FOOTER */
+
+.footer{
+
+text-align:center;
+
+padding:14px;
+
+font-size:12px;
+
+opacity:0.7;
+
+}
+
+/* LOADER */
+
+.loader{
+
+display:none;
+
+margin:15px auto 0;
+
+border:4px solid rgba(255,255,255,0.1);
+
+border-top:4px solid #00d9ff;
+
+width:35px;
+
+height:35px;
+
+border-radius:50%;
+
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+@media(min-width:800px){
+
+body{
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.container{
+
+width:430px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">
+
+<div class="logo-circle">
+
+<i class="fa-solid fa-brain"></i>
+
+</div>
+
+<div class="logo-text">
+
+<h1>Quantum Learn AI</h1>
+
+<p>We Think Wisely</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="container">
+
+<div class="card">
+
+<h2>Welcome Back</h2>
+
+<p class="subtitle">
+
+Continue your smart learning journey with AI assistance.
+
+</p>
+
+<!-- EMAIL -->
+
+<div class="input-box">
+
+<i class="fa-solid fa-envelope"></i>
+
+<input type="email"
+id="email"
+placeholder="Enter Email">
+
+</div>
+
+<!-- PASSWORD -->
+
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
+<input type="password"
+id="password"
+placeholder="Enter Password">
+
+</div>
+
+<!-- LOGIN BUTTON -->
+
+<button class="main-btn"
+onclick="login()">
+
+Login
+
+</button>
+
+<div class="loader"
+id="loader"></div>
+
+<!-- DIVIDER -->
+
+<div class="divider">
+
+<span>OR</span>
+
+</div>
+
+<!-- GOOGLE -->
+
+<button class="google-btn"
+onclick="googleLogin()">
+
+<i class="fa-brands fa-google"></i>
+
+Continue with Google
+
+</button>
+
+<!-- LINKS -->
+
+<div class="links">
+
+<a href="forgot.html">
+
+Forgot Password?
+
+</a>
+
+<a href="signup.html">
+
+Sign Up
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+© Quantum Learn AI
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getAuth,
+
+signInWithEmailAndPassword,
+
+GoogleAuthProvider,
+
+signInWithPopup,
+
+onAuthStateChanged
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+/* FIREBASE */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA6RGcEIFPSF25wsMN-7QLg1-EvJrtvLmY",
+
+authDomain: "my-web-e9b90.firebaseapp.com",
+
+projectId: "my-web-e9b90",
+
+storageBucket: "my-web-e9b90.firebasestorage.app",
+
+messagingSenderId: "253275343289",
+
+appId: "1:253275343289:web:169a10b703962d3ae90e68",
+
+measurementId: "G-RDV9JZYJDZ"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+const provider =
+new GoogleAuthProvider();
+
+const loader =
+document.getElementById("loader");
+
+/* AUTO LOGIN CHECK */
+
+onAuthStateChanged(auth,
+(user)=>{
+
+if(user){
+
+window.location.href =
+"menu.html";
+
+}
+
+});
+
+/* LOGIN */
+
+window.login = async function(){
+
+const email =
+document.getElementById("email").value.trim();
+
+const password =
+document.getElementById("password").value.trim();
+
+if(email === "" || password === ""){
+
+alert(
+"Please fill all fields."
+);
+
+return;
+
+}
+
+loader.style.display = "block";
+
+try{
+
+const userCredential =
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const user =
+userCredential.user;
+
+if(user.emailVerified){
+
+localStorage.setItem(
+"userEmail",
+user.email
+);
+
+sessionStorage.setItem(
+"isLoggedIn",
+"true"
+);
+
+window.location.href =
+"menu.html";
+
+}else{
+
+alert(
+"Please verify your email first."
+);
+
+}
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+loader.style.display = "none";
+
+}
+
+/* GOOGLE LOGIN */
+
+window.googleLogin =
+async function(){
+
+loader.style.display = "block";
+
+try{
+
+const result =
+await signInWithPopup(
+auth,
+provider
+);
+
+const user =
+result.user;
+
+localStorage.setItem(
+"userEmail",
+user.email
+);
+
+sessionStorage.setItem(
+"isLoggedIn",
+"true"
+);
+
+window.location.href =
+"menu.html";
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+loader.style.display = "none";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8"/>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0"/>
+
+<title>
+Quantum Learn AI - Smart AI Chat
+</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+:root{
+--nav:#111827;
+--border:rgba(255,255,255,0.08);
+--sub:#94a3b8;
+}
+
+body{
+background:#0f172a;
+color:white;
+height:100vh;
+display:flex;
+flex-direction:column;
+overflow:hidden;
+}
+
+/* NAVBAR */
+
+.navbar{
+
+height:74px;
+
+background:rgba(17,24,39,0.95);
+
+backdrop-filter:blur(10px);
+
+border-bottom:
+1px solid var(--border);
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:0 14px;
+
+position:sticky;
+top:0;
+z-index:1000;
+
+box-shadow:
+0 4px 20px rgba(0,0,0,0.25);
+
+}
+
+/* LOGO */
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.logo-circle{
+
+width:50px;
+height:50px;
+
+border-radius:16px;
+
+background:
+linear-gradient(
+135deg,
+#00d9ff,
+#0077ff
+);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:22px;
+
+color:white;
+
+box-shadow:
+0 0 18px rgba(0,217,255,0.45);
+
+animation:glow 3s infinite ease-in-out;
+
+}
+
+@keyframes glow{
+
+0%{
+box-shadow:0 0 10px rgba(0,217,255,0.3);
+}
+
+50%{
+box-shadow:0 0 22px rgba(0,217,255,0.7);
+}
+
+100%{
+box-shadow:0 0 10px rgba(0,217,255,0.3);
+}
+
+}
+
+.logo-text h1{
+font-size:18px;
+font-weight:700;
+color:white;
+}
+
+.logo-text p{
+font-size:11px;
+color:var(--sub);
+margin-top:3px;
+}
+
+/* RIGHT NAV */
+
+.right-nav{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.nav-icon{
+
+position:relative;
+
+width:42px;
+height:42px;
+
+border-radius:14px;
+
+background:
+rgba(255,255,255,0.05);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:18px;
+
+color:#cbd5e1;
+
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+.nav-icon:hover{
+background:rgba(96,165,250,0.18);
+color:#60a5fa;
+}
+
+/* PROFILE */
+
+.profile{
+
+position:relative;
+
+width:46px;
+height:46px;
+
+border-radius:50%;
+
+overflow:hidden;
+
+border:2px solid #60a5fa;
+
+cursor:pointer;
+
+}
+
+.profile img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* MAIN */
+
+.main{
+flex:1;
+padding:15px;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+gap:15px;
+background:#1e293b;
+}
+
+/* SEARCH */
+
+.search-box{
+background:#111827;
+border-radius:14px;
+padding:12px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.search-box i{
+color:#60a5fa;
+font-size:18px;
+}
+
+.search-box input{
+flex:1;
+background:none;
+border:none;
+outline:none;
+color:white;
+font-size:16px;
+}
+
+/* TEXTAREA */
+
+textarea{
+width:100%;
+height:150px;
+border:none;
+outline:none;
+resize:none;
+border-radius:15px;
+padding:15px;
+background:#111827;
+color:white;
+font-size:16px;
+line-height:1.5;
+}
+
+/* BUTTONS */
+
+.button-area{
+display:flex;
+gap:10px;
+}
+
+.button-area button{
+flex:1;
+height:55px;
+border:none;
+border-radius:14px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.generate-btn{
+background:#60a5fa;
+color:white;
+}
+
+.clear-btn{
+background:#ef4444;
+color:white;
+}
+
+.generate-btn:hover,
+.clear-btn:hover{
+transform:scale(1.02);
+}
+
+/* RESULT BOX */
+
+.result-box{
+flex:1;
+background:#020f2f;
+border-radius:15px;
+padding:18px;
+overflow-y:auto;
+line-height:1.8;
+font-size:15px;
+}
+
+.result-box::-webkit-scrollbar{
+width:4px;
+}
+
+.result-box::-webkit-scrollbar-thumb{
+background:#60a5fa;
+border-radius:10px;
+}
+
+/* CHAT BUBBLES */
+
+.user-message{
+
+background:#2563eb;
+padding:12px;
+border-radius:14px;
+margin-bottom:15px;
+max-width:90%;
+margin-left:auto;
+
+}
+
+.ai-message{
+
+background:#111827;
+padding:14px;
+border-radius:14px;
+margin-bottom:10px;
+border-left:4px solid #60a5fa;
+
+}
+
+.ai-message strong{
+color:#60a5fa;
+}
+
+.loading{
+display:flex;
+align-items:center;
+gap:12px;
+font-size:16px;
+}
+
+.spinner{
+width:22px;
+height:22px;
+border:3px solid #334155;
+border-top:3px solid #60a5fa;
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+.error{
+color:#ff6b6b;
+font-weight:bold;
+}
+
+/* FOOTER */
+
+.footer{
+height:70px;
+background:#091225;
+display:flex;
+justify-content:space-around;
+align-items:center;
+border-top:1px solid rgba(255,255,255,0.1);
+}
+
+.footer a{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-decoration:none;
+color:#cbd5e1;
+font-size:12px;
+gap:4px;
+transition:0.3s;
+}
+
+.footer a i{
+font-size:20px;
+}
+
+.footer a:hover{
+color:#60a5fa;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+.logo-circle{
+width:44px;
+height:44px;
+font-size:18px;
+}
+
+.logo-text h1{
+font-size:15px;
+}
+
+.logo-text p{
+font-size:10px;
+}
+
+textarea{
+height:130px;
+}
+
+.result-box{
+font-size:14px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">
+
+<div class="logo-circle">
+<i class="fas fa-brain"></i>
+</div>
+
+<div class="logo-text">
+<h1>Quantum Learn AI</h1>
+<p>Human Smart AI Assistant</p>
+</div>
+
+</div>
+
+<div class="right-nav">
+
+<div class="nav-icon">
+<i class="fas fa-bell"></i>
+</div>
+
+<div class="profile">
+
+<img
+id="profileImage"
+src="https://i.imgur.com/6VBx3io.png"
+alt="Profile">
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+<i class="fas fa-search"></i>
+
+<input type="text"
+placeholder="Search anything..."
+id="searchInput">
+
+</div>
+
+<!-- INPUT -->
+
+<textarea
+id="userInput"
+placeholder="Ask AI anything in normal language..."></textarea>
+
+<!-- BUTTONS -->
+
+<div class="button-area">
+
+<button class="generate-btn"
+onclick="askAI()">
+Ask AI
+</button>
+
+<button class="clear-btn"
+onclick="clearAll()">
+Clear
+</button>
+
+</div>
+
+<!-- RESULT -->
+
+<div id="resultBox"
+class="result-box">
+
+<div class="ai-message">
+<strong>Quantum Learn AI:</strong><br><br>
+Hello 👋<br>
+Ask me anything and I will respond like a real human assistant.
+</div>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+<a href="menu.html">
+<i class="fas fa-home"></i>
+<span>Home</span>
+</a>
+
+<a href="quiz.html">
+<i class="fas fa-question-circle"></i>
+<span>Quiz</span>
+</a>
+
+<a href="planner.html">
+<i class="fas fa-calendar"></i>
+<span>Planner</span>
+</a>
+
+<a href="profile.html">
+<i class="fas fa-user"></i>
+<span>Profile</span>
+</a>
+
+</div>
+
+<!-- JAVASCRIPT -->
+
+<script type="module">
+
+/* FIREBASE */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import { getAuth }
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA6RGcEIFPSF25wsMN-7QLg1-EvJrtvLmY",
+
+authDomain: "my-web-e9b90.firebaseapp.com",
+
+projectId: "my-web-e9b90",
+
+storageBucket: "my-web-e9b90.firebasestorage.app",
+
+messagingSenderId: "253275343289",
+
+appId: "1:253275343289:web:169a10b703962d3ae90e68",
+
+measurementId: "G-RDV9JZYJDZ"
+
+};
+
+const app =
+initializeApp(firebaseConfig);
+
+const auth =
+getAuth(app);
+
+/* PROFILE IMAGE */
+
+const savedProfile =
+localStorage.getItem("profileImage");
+
+if(savedProfile){
+
+document.getElementById("profileImage").src =
+savedProfile;
+
+}
+
+/* SEARCH NAVIGATION */
+
+document.getElementById("searchInput")
+.addEventListener("input", function(){
+
+const value =
+this.value.toLowerCase();
+
+if(value.includes("home")){
+window.location.href = "menu.html";
+}
+
+if(value.includes("quiz")){
+window.location.href = "quiz.html";
+}
+
+if(value.includes("planner")){
+window.location.href = "planner.html";
+}
+
+if(value.includes("profile")){
+window.location.href = "profile.html";
+}
+
+});
+
+/* ASK AI */
+
+window.askAI =
+async function(){
+
+const input =
+document.getElementById("userInput").value;
+
+const resultBox =
+document.getElementById("resultBox");
+
+if(!input.trim()){
+
+resultBox.innerHTML =
+"<div class='error'>Please enter a message.</div>";
+
+return;
+
+}
+
+/* USER MESSAGE */
+
+resultBox.innerHTML += `
+
+<div class="user-message">
+
+${input}
+
+</div>
+
+`;
+
+/* LOADING */
+
+resultBox.innerHTML += `
+
+<div class="loading" id="loadingBox">
+
+<div class="spinner"></div>
+
+Thinking...
+
+</div>
+
+`;
+
+resultBox.scrollTop =
+resultBox.scrollHeight;
+
+try{
+
+const response = await fetch(
+
+"https://openrouter.ai/api/v1/chat/completions",
+
+{
+method:"POST",
+
+headers:{
+
+"Authorization":
+"Bearer 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",
+
+"Content-Type":"application/json",
+
+"HTTP-Referer":"https://localhost",
+
+"X-Title":"Quantum Learn AI"
+
+},
+
+body:JSON.stringify({
+
+model:"openai/gpt-4o-mini",
+
+messages:[
+
+{
+role:"system",
+content:
+"You are Quantum Learn AI, a friendly human-like AI assistant. Respond naturally like a smart human teacher and assistant. Be clear, accurate, friendly, and conversational."
+},
+
+{
+role:"user",
+content:input
+}
+
+]
+
+})
+
+}
+
+);
+
+const data =
+await response.json();
+
+console.log(data);
+
+/* REMOVE LOADING */
+
+document.getElementById("loadingBox")
+.remove();
+
+if(data.error){
+
+resultBox.innerHTML += `
+
+<div class="ai-message error">
+
+${data.error.message}
+
+</div>
+
+`;
+
+return;
+
+}
+
+const text =
+data.choices[0].message.content;
+
+/* AI RESPONSE */
+
+resultBox.innerHTML += `
+
+<div class="ai-message">
+
+<strong>Quantum Learn AI:</strong><br><br>
+
+${text.replace(/\n/g,"<br>")}
+
+</div>
+
+`;
+
+resultBox.scrollTop =
+resultBox.scrollHeight;
+
+}catch(error){
+
+console.log(error);
+
+const loading =
+document.getElementById("loadingBox");
+
+if(loading){
+loading.remove();
+}
+
+resultBox.innerHTML += `
+
+<div class="ai-message error">
+
+AI failed to respond.
+
+</div>
+
+`;
+
+}
+
+}
+
+/* CLEAR */
+
+window.clearAll =
+function(){
+
+document.getElementById("userInput").value = "";
+
+document.getElementById("resultBox").innerHTML = `
+
+<div class="ai-message">
+<strong>Quantum Learn AI:</strong><br><br>
+Chat cleared successfully.
+</div>
+
+`;
+
+}
+
+</script>
+
+</body>
+</html>
